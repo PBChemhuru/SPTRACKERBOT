@@ -8,6 +8,8 @@ from utils import calculate_pb, get_hit_dice
 from database import init_db, add_character, get_characters_by_user, update_character, delete_character, get_characters, \
 increment_all_current_sp, rest_user, spend_sp,get_current_sp
 
+from keep_alive import keep_alive
+
 load_dotenv()
 TOKEN = os.getenv('token')
 
