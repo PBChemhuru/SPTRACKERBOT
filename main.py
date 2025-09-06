@@ -13,6 +13,7 @@ from keep_alive import keep_alive
 load_dotenv()
 TOKEN = os.getenv('token')
 
+keep_alive()
 
 class Client(commands.Bot):
     async def on_ready(self):
