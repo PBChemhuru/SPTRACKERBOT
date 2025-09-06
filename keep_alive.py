@@ -1,5 +1,5 @@
 from flask import Flask
-from threading import threading
+from threading import Threading
 
 app = Flask('')
 
