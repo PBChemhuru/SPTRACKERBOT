@@ -97,7 +97,18 @@ def get_current_sp(user: str, name: str) -> int | None:
     result = cursor.fetchone()
     conn.close()
     return result[0] if result else None
-
+    
+def get_max_sp(user: str, name: str) -> int | None:
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT max_sp
+        FROM characters
+        WHERE user = ? AND name = ?
+    ''', (user, name.lower()))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
 def spend_sp(user: str, name: str, amount: int):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
