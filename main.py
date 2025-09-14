@@ -150,34 +150,33 @@ async def spendsp(interaction: discord.Interaction, sp: int,character:str):
     except Exception as e:
         await interaction.response.send_message(f"Error: {e}")
 
-@client.tree.command(name='regain_sp', description="Regain Sp")
-async def regain_sp(interaction: discord.Interaction, sp: int,character:str):
+@client.tree.command(name='regain_sp', description="Regain SP for a character without exceeding max SP")
+async def regain_sp(interaction: discord.Interaction, sp: int, character: str):
     try:
-        user = (interaction.user.id)
+        user = str(interaction.user.id)
         current_sp = get_current_sp(user, character)
+        max_sp = get_max_sp(user, character)
 
-        if current_sp is None:
+        if current_sp is None or max_sp is None:
             return await interaction.response.send_message(f"❌ Character '{character}' not found.")
 
-        if current_sp <= 0:
-            return await interaction.response.send_message(f"⚠️ '{character}' is already SP exhausted (0 SP).")
-
-        if current_sp - sp < 0:
+        if current_sp >= max_sp:
             return await interaction.response.send_message(
-                f"⚠️ '{character}' does not have enough SP to spend {sp}. Current SP: {current_sp}"
+                f"⚠️ '{character}' already has full SP ({current_sp}/{max_sp}). No need to regain."
             )
 
-        spend_sp(user, character, sp)
+        regain_sp_capped(user, character, sp)
 
         updated_characters = get_characters_by_user(user)
         msg = "**Your Characters:**\n"
         for name, level, current_sp, max_sp in updated_characters:
             msg += f" {name} — Level {level}, SP: {current_sp}/{max_sp}\n"
 
-        await interaction.response.send_message(f"✅ {sp} SP spent for '{character}'.\n\n{msg}")
+        await interaction.response.send_message(f"✅ {character} regained up to {sp} SP.\n\n{msg}")
     except Exception as e:
-        await interaction.response.send_message(f"Error: {e}")
+        await interaction.response.send_message(f"❌ Error: {e}")
 
-regain_sp
+
+
 
 client.run(TOKEN)
