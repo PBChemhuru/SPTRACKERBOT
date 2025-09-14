@@ -125,7 +125,7 @@ def regain_sp(user: str, name: str, amount: int):
     cursor = conn.cursor()
     cursor.execute('''
         UPDATE characters
-        SET current_sp = current_sp + ?
+        SET current_sp = MIN(current_sp + ?, max_sp)
         WHERE user = ? AND name = ?
     ''', (amount, user, name.lower()))
     conn.commit()
