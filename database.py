@@ -109,6 +109,16 @@ def spend_sp(user: str, name: str, amount: int):
     conn.commit()
     conn.close()
 
+def regain_sp(user: str, name: str, amount: int):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE characters
+        SET current_sp = current_sp + ?
+        WHERE user = ? AND name = ?
+    ''', (amount, user, name.lower()))
+    conn.commit()
+    conn.close()
 
 
 
