@@ -38,6 +38,7 @@ def get_characters_by_user(user:str):
     results = cursor.fetchall()
     conn.close()
     return results
+    
 def get_characters():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -48,6 +49,7 @@ def get_characters():
     results = cursor.fetchall()
     conn.close()
     return results
+    
 def update_character(user: str, original_name: str, new_name: str, level: int, sp: int):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -109,6 +111,7 @@ def get_max_sp(user: str, name: str) -> int | None:
     result = cursor.fetchone()
     conn.close()
     return result[0] if result else None
+    
 def spend_sp(user: str, name: str, amount: int):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
