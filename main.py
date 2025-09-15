@@ -6,7 +6,7 @@ from discord import app_commands
 from dotenv import load_dotenv
 from utils import calculate_pb, get_hit_dice
 from database import init_db, add_character, get_characters_by_user, update_character, delete_character, get_characters, \
-increment_all_current_sp, rest_user, spend_sp,get_current_sp,regain_sp,get_max_sp
+increment_all_current_sp, rest_user, spend_sp,get_current_sp,regain_sp_db,get_max_sp
 
 from keep_alive import keep_alive
 
@@ -165,7 +165,7 @@ async def regain_sp(interaction: discord.Interaction, sp: int, character: str):
                 f"⚠️ '{character}' already has full SP ({current_sp}/{max_sp}). No need to regain."
             )
 
-        regain_sp(user, character, sp)
+        regain_sp_db(user, character, sp)
 
         updated_characters = get_characters_by_user(user)
         msg = "**Your Characters:**\n"

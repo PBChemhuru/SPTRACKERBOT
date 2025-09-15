@@ -123,7 +123,7 @@ def spend_sp(user: str, name: str, amount: int):
     conn.commit()
     conn.close()
 
-def regain_sp(user: str, name: str, amount: int):
+def regain_sp_db(user: str, name: str, amount: int):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute('''
