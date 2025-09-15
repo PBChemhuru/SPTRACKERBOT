@@ -165,7 +165,7 @@ async def regain_sp(interaction: discord.Interaction, sp: int, character: str):
                 f"⚠️ '{character}' already has full SP ({current_sp}/{max_sp}). No need to regain."
             )
 
-        regain_sp_capped(user, character, sp)
+        regain_sp(user, character, sp)
 
         updated_characters = get_characters_by_user(user)
         msg = "**Your Characters:**\n"
